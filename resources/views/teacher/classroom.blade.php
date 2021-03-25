@@ -125,6 +125,8 @@
                                     <td><a href="{{$classData->fileUrl}}" target="_blank" ><i class="fas fa-file-word bg-soft-primary mr-2"></i></a></td>
                                 @elseif($classData->type=='YOUTUBE')
                                     <td><a href="{{$classData->youtubeLink}}" target="_blank" ><i class=" ti-youtube bg-soft-danger mr-2"></i></a></td>
+                                @elseif($classData->type=='TOPIC')
+                                    <td>Topic</td>
                                 @else
                                     <i class="mdi mdi-checkbox-marked-circle-outline bg-soft-success mr-2"></i>
                                 @endif
@@ -141,8 +143,9 @@
                             
                                 <td>                                                       
                                     <a href="/teacher/edit_classwork/{{$classData->id}}" class="mr-1" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Edit" data-trigger="hover"><i class="fas fa-edit text-info font-16"></i></a>
-                                     <a href="/teacher/classworkAttendence/{{$classData->id}}" class="mr-1" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Attendence" data-trigger="hover"><i class="fas fa-address-card text-info font-16"></i></a>
-                                    <a class="swaldelete" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="DeleteW" data-trigger="hover"><i class="fas fa-trash-alt text-danger font-16"></i></a>
+                                    <a href="/teacher/classworkAttendence/{{$classData->id}}" class="mr-1" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Attendence" data-trigger="hover"><i class="fas fa-address-card text-info font-16"></i></a>
+                                    <a href="/teacher/studentReturnWork/{{$classData->id}}" class="mr-1" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Student work" data-trigger="hover"><i class="fas fa-reply text-info font-16"></i></a>
+                                    <a onclick="return confirm('Are you sure want to delete?')" href="/teacher/classroom/{{$classData->id}}/delete"><i class="fas fa-trash-alt text-danger font-16"></i></a>
                                 </td>
                             </tr><!--end tr-->
                             @endif
@@ -165,44 +168,6 @@
         <script src="{{ URL::asset('plugins/peity-chart/jquery.peity.min.js') }}"></script>
         <script src="{{ URL::asset('assets/pages/jquery.analytics_customers.init.js') }}"></script>
 
-        <!-- Sweet Alert-->
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-        <script>
-
-
-            $(document).ready(function(){
-                
- 
-                $('.swaldelete').click(function (e){
-                 e.preventDefault();
-                  var topicId = $(this).closest("tr").find('.delID').val();
-
-                    
-                    swal({
-                    title: "Are you sure?",
-                    text: "Once deleted, you will not be able to recover this imaginary file!",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                    })
-                    .then((willDelete) => {
-                    if (willDelete) {
-                        swal("Poof! Your imaginary file has been deleted!", {
-                        icon: "success",
-                        });
-                      console.log(topicId);
-                        window.location = `/teacher/classroom/${topicId}/delete`;
-                     //   window.location.href = "{{url('/teacher/classroom/')}}"  + topicId + "/delete";
-                    } else {
-                        swal("Your imaginary file is safe!");
-                    }
-                    });
-                });
-
-
-            });
-
-        </script>
+  
 
 @stop

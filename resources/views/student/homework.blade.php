@@ -35,7 +35,7 @@
                             </div>
                         </div>
                         <div class="footter text-center">                        
-                            <a href="{{$fileUrl}}" target="_blank"  class="btn btn-primary waves-effect waves-light"><i class="fas fa-download mr-2"></i>Download</a>
+                            <a href="{{$fileUrl}}" target="_blank" download  class="btn btn-primary waves-effect waves-light"><i class="fas fa-download mr-2"></i>Download</a>
                         </div>
                         <div>
                             @if($studentReturn==1)
@@ -72,10 +72,12 @@
                                                                     <p class="text-muted mb-0">Size - {{$fileSizes}}KB</p>
                                                                 </div>                                                                                              
                                                             </div><!--end media body-->
-                                                        </div>
+                                                        </div> 
                                                         </a>
                                                                 <div class=" ml-3 align-items-start text-center">
-                                                                <span> <a href="{{$stuHomeworkUpload->id}}/{{$id}}/delete"><i class="fas fa-trash-alt text-danger font-16"></i></a></span>
+                                                                <span> 
+                                                                    <a onclick="return confirm('Are you sure want to delete?')" href="{{$stuHomeworkUpload->id}}/{{$id}}/delete"><i class="fas fa-trash-alt text-danger font-16"></i></a>
+                                                                </span>
                                                                     <span class="mt-3 badge badge-soft-purple">{{$stuHomeworkUpload->created_at->format('d/M')}}</span>
                                                                 </div>
                                                     </li>

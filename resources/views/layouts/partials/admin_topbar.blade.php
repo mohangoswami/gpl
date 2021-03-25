@@ -47,6 +47,7 @@
                             </span>
                         </a>                        
                     </li>                      
+                   
                     <li>
                         <button class="button-menu-mobile nav-link">
                             <i data-feather="menu" class="align-self-center"></i>
@@ -63,7 +64,7 @@
                                     <div class="text-center system-text">
                                         <h4 class="text-white">The Poworfull Dashboard</h4>
                                         <p class="text-white">See all the pages Metrica.</p>
-                                        <a href="https://themesbrand.com/metrica/" class="btn btn-sm btn-pink mt-2">See Dashboard</a>
+                                        <a href="#" class="btn btn-sm btn-pink mt-2">See Dashboard</a>
                                     </div>
                                     <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
                                         <div class="carousel-inner">
@@ -110,7 +111,7 @@
                             <input type="text" id="AllCompo" placeholder="Search..." class="form-control">
                             <a href=""><i class="fas fa-search"></i></a>
                         </form>
-                    </li>
+                    </li>-->
                 </ul>
             </nav>
             <!-- end navbar-->

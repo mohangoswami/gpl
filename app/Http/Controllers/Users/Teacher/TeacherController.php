@@ -14,6 +14,10 @@ use DB;
 use Illuminate\Support\Facades\Storage;
 use App\Notifications\emailNotification;
 use App\User;
+use App\Admin;
+use App\flashNews;
+use App\stuHomeworkUpload;
+use App\liveClassAttendence;
 
 
 class TeacherController extends Controller
@@ -39,10 +43,11 @@ class TeacherController extends Controller
         $subCodes[] =  Auth::guard('teacher')->user()->class_code11;
         
         $classCodes = subCode::all()->sortBy("class");
+        $flashNews = flashNews::all()->sortByDesc('created_at');
 
         $classworks  = classwork::all()->where('email',Auth::user()->email)->sortByDesc('created_at');   
         $exams = Exam::all()->where('email',Auth::user()->email)->sortByDesc('created_at'); 
-        return view('/teacher/dashboard',compact('subCodes','classworks','exams','classCodes'));
+        return view('/teacher/dashboard',compact('subCodes','classworks','exams','classCodes','flashNews'));
     }
 
     public function liveClass(){
@@ -123,6 +128,8 @@ class TeacherController extends Controller
         $classDatas = classwork::all()->where('class',$class)->where('subject',$subject)->sortByDesc('created_at');
 
         $subIds = subCode::all()->where('class',$class)->where('subject',$subject);
+        $teacherCode=false;
+       
         foreach($subIds as $forSubId){
             $checkId =   $forSubId->id;
             $subId = $forSubId->id;
@@ -134,12 +141,14 @@ class TeacherController extends Controller
             if($checkId == $subcode){
                     $teacherCode = true;
                 }
+
             }
+    
         if($teacherCode==true){
             return view('teacher.edit_classwork', compact('subCodes','classCodes', 'classDatas','class','subject','title','id','terms','type','youtubeLink','studentReturn','subId'));
         }
             else{
-				return redirect('teacher/create_classwork/'.$id)->with('failed',"operation failed");
+				return redirect('teacher/inner_classroom/'.$id)->with('failed',"operation failed");
             }
 }
  
@@ -168,7 +177,7 @@ class TeacherController extends Controller
                 $classwork->title =$title;
                 $classwork->subject = $subject;
                 $classwork->class = $class;
-                $classwork->fileUrl = 'https://upto12th.s3.ap-south-1.amazonaws.com/' . $class . '/' . $subject . '/' . $title . '/' . $data['fileName'];
+                $classwork->fileUrl = 'https://brefnew-dev-storage-1xk3pgbkrilzi.s3.amazonaws.com/' . $class . '/' . $subject . '/' . $title . '/' . $data['fileName'];
                 $classwork->fileSize = $request->file('file')->getSize();
                 if(isset($data['studentWorkIsrequire'])){
                 $classwork->studentReturn = 1;
@@ -185,13 +194,15 @@ class TeacherController extends Controller
           
                 $type = "PDF";
                 $workType = "Classwork";
-             //   User::where('email','bali4u2001@gmail.com') -> first()->notify(new emailNotification);
+              
                 User::all()->where('grade',$class)->each(function (User $user) use ($workType,$classworkId,$class,$subject,$title,$type){
                     $user->notify(new emailNotification($workType,$classworkId,$class,$subject,$title,$type));
+              
                 });
-              /*  foreach($students as $student){
-                $student->notify(new emailNotification($classworkId,$class,$subject,$title));
-                }*/
+                Admin::all()->each(function (Admin $admin) use ($workType,$classworkId,$class,$subject,$title,$type){
+                    $admin->notify(new emailNotification($workType,$classworkId,$class,$subject,$title,$type));
+              
+                });
 				return redirect('teacher/addMaterial/'.$id)->with('status','Insert successfully');
 			}
 			catch(Exception $e){
@@ -225,7 +236,7 @@ class TeacherController extends Controller
                 $classwork->title =$title;
                 $classwork->subject = $subject;
                 $classwork->class = $class;
-                $classwork->fileUrl = 'https://upto12th.s3.ap-south-1.amazonaws.com/' . $class . '/' . $subject . '/' . $title . '/' . $data['fileName'];
+                $classwork->fileUrl = 'https://brefnew-dev-storage-1xk3pgbkrilzi.s3.amazonaws.com/' . $class . '/' . $subject . '/' . $title . '/' . $data['fileName'];
                 $classwork->fileSize = $request->file('file')->getSize();
                 if(isset($data['imgStudentWorkIsrequire'])){
                     $classwork->studentReturn = 1;
@@ -247,7 +258,10 @@ class TeacherController extends Controller
                 User::all()->where('grade',$class)->each(function (User $user) use ($workType,$classworkId,$class,$subject,$title,$type){
                     $user->notify(new emailNotification($workType,$classworkId,$class,$subject,$title,$type));
                 });
-
+                Admin::all()->each(function (Admin $admin) use ($workType,$classworkId,$class,$subject,$title,$type){
+                    $admin->notify(new emailNotification($workType,$classworkId,$class,$subject,$title,$type));
+              
+                });
 				return redirect('teacher/addMaterial/'.$id)->with('status','Insert successfully');
 			}
 			catch(Exception $e){
@@ -280,7 +294,7 @@ class TeacherController extends Controller
                 $classwork->title =$title;                          
                 $classwork->subject = $subject;
                 $classwork->class = $class;
-                $classwork->fileUrl = 'https://upto12th.s3.ap-south-1.amazonaws.com/' . $class . '/' . $subject . '/' . $title . '/' . $data['fileName'];
+                $classwork->fileUrl = 'https://brefnew-dev-storage-1xk3pgbkrilzi.s3.amazonaws.com/' . $class . '/' . $subject . '/' . $title . '/' . $data['fileName'];
                 $classwork->fileSize = $request->file('file')->getSize();
                 if(isset($data['docStudentWorkIsrequire'])){
                     $classwork->studentReturn = 1;
@@ -301,7 +315,10 @@ class TeacherController extends Controller
                 User::all()->where('grade',$class)->each(function (User $user) use ($workType,$classworkId,$class,$subject,$title,$type){
                     $user->notify(new emailNotification($workType,$classworkId,$class,$subject,$title,$type));
                 });
-
+                Admin::all()->each(function (Admin $admin) use ($workType,$classworkId,$class,$subject,$title,$type){
+                    $admin->notify(new emailNotification($workType,$classworkId,$class,$subject,$title,$type));
+              
+                });
 				return redirect('teacher/addMaterial/'.$id)->with('status','Insert successfully');
 			}
 			catch(Exception $e){
@@ -348,7 +365,9 @@ class TeacherController extends Controller
                 User::all()->where('grade',$class)->each(function (User $user) use ($workType,$classworkId,$class,$subject,$title,$type){
                     $user->notify(new emailNotification($workType,$classworkId,$class,$subject,$title,$type));
                 });
-
+                Admin::all()->each(function (Admin $admin) use ($workType,$classworkId,$class,$subject,$title,$type){
+                    $admin->notify(new emailNotification($workType,$classworkId,$class,$subject,$title,$type));
+                });
 				return redirect('teacher/addMaterial/'.$id)->with('status','Insert successfully');
 			}
 			catch(Exception $e){
@@ -388,7 +407,7 @@ class TeacherController extends Controller
                         'title' =>  $title,
                         'subject' => $subject,
                         'class' => $class,
-                        'fileUrl' => 'https://upto12th.s3.ap-south-1.amazonaws.com/' . $class . '/' . $subject . '/' . $title . '/' . $data['fileName'],
+                        'fileUrl' => 'https://brefnew-dev-storage-1xk3pgbkrilzi.s3.amazonaws.com/' . $class . '/' . $subject . '/' . $title . '/' . $data['fileName'],
                         'fileSize' => $request->file('file')->getSize(),
                         'studentReturn' => $studentReturn, 
                         'type' => 'PDF',]);
@@ -440,7 +459,7 @@ class TeacherController extends Controller
                         'title' =>  $title,
                         'subject' => $subject,
                         'class' => $class,
-                        'fileUrl' => 'https://upto12th.s3.ap-south-1.amazonaws.com/' . $class . '/' . $subject . '/' . $title . '/' . $data['fileName'],
+                        'fileUrl' => 'https://brefnew-dev-storage-1xk3pgbkrilzi.s3.amazonaws.com/' . $class . '/' . $subject . '/' . $title . '/' . $data['fileName'],
                         'fileSize' => $request->file('file')->getSize(),
                         'studentReturn' => $studentReturn, 
                         'type' => 'IMG',]);
@@ -492,7 +511,7 @@ class TeacherController extends Controller
                         'title' =>  $title,
                         'subject' => $subject,
                         'class' => $class,
-                        'fileUrl' => 'https://upto12th.s3.ap-south-1.amazonaws.com/' . $class . '/' . $subject . '/' . $title . '/' . $data['fileName'],
+                        'fileUrl' => 'https://brefnew-dev-storage-1xk3pgbkrilzi.s3.amazonaws.com/' . $class . '/' . $subject . '/' . $title . '/' . $data['fileName'],
                         'fileSize' => $request->file('file')->getSize(),
                         'studentReturn' => $studentReturn, 
                         'type' => 'DOCS',]);
@@ -629,13 +648,15 @@ class TeacherController extends Controller
         $subCodes[] =  Auth::guard('teacher')->user()->class_code11;
 
         $classCodes = subCode::all()->sortBy("class");
+        
         $DBtopics = classwork::all()->where('id',$id)->sortByDesc('created_at');
         foreach($DBtopics as $topic){
           $title = $topic->title;
           $teacherName = $topic->name;
           $subject= $topic->subject;
+          $class= $topic->class;
         }
-        $DBtitles = classwork::all()->where('title',$title)->sortByDesc('created_at');
+        $DBtitles = classwork::all()->where('class',$class)->where('subject',$subject)->where('title',$title)->sortByDesc('created_at');
    
         return view('teacher.inner_classroom', compact('DBtitles','title','teacherName','subject','subCodes','classCodes'));
    
@@ -692,6 +713,7 @@ class TeacherController extends Controller
             $classwork->discription = $data['discription'];
             $classwork->subject = $subject;
             $classwork->class = $class;
+            $classwork->type = 'TOPIC';
           
             $classwork->save();
 
@@ -751,6 +773,7 @@ class TeacherController extends Controller
                 $class = $classwork->class;
             }
             $users = User::all()->where('grade',$class);
+            
             foreach($users as $user){
             foreach($user->readnotifications as $notification){
                    $readNotications[] = $notification;
@@ -771,6 +794,67 @@ class TeacherController extends Controller
 
             }
 
+            public function studentReturnWork($id){
+                $subCodes[] =  Auth::guard('teacher')->user()->class_code0;
+                $subCodes[] =  Auth::guard('teacher')->user()->class_code1;
+                $subCodes[] =  Auth::guard('teacher')->user()->class_code2;
+                $subCodes[] =  Auth::guard('teacher')->user()->class_code3;
+                $subCodes[] =  Auth::guard('teacher')->user()->class_code4;
+                $subCodes[] =  Auth::guard('teacher')->user()->class_code5;
+                $subCodes[] =  Auth::guard('teacher')->user()->class_code6;
+                $subCodes[] =  Auth::guard('teacher')->user()->class_code7;
+                $subCodes[] =  Auth::guard('teacher')->user()->class_code8;
+                $subCodes[] =  Auth::guard('teacher')->user()->class_code9;
+                $subCodes[] =  Auth::guard('teacher')->user()->class_code10;
+                $subCodes[] =  Auth::guard('teacher')->user()->class_code11;
+                
+                $classCodes = subCode::all()->sortBy("class");
+    
+                $stuHomeworkUploads = stuHomeworkUpload::all()->where('titleId',$id)->sortBy('email');
+               // dd($stuHomeworkUpload);
+                foreach($stuHomeworkUploads as $stuHomeworkUpload){
+                    $class = $stuHomeworkUpload->class;
+                }
+                if(!(isset($class))){
+                    return back()->with('failed',"No record found");
+ 
+                }
+                $users = User::all()->where('grade',$class);
+                
+                    return view('teacher/studentReturnWork', compact('subCodes','classCodes','id','users','stuHomeworkUploads'));    
+            
+                }
+
+                public function liveClassAttendence($id){
+                    $subCodes[] =  Auth::guard('teacher')->user()->class_code0;
+                    $subCodes[] =  Auth::guard('teacher')->user()->class_code1;
+                    $subCodes[] =  Auth::guard('teacher')->user()->class_code2;
+                    $subCodes[] =  Auth::guard('teacher')->user()->class_code3;
+                    $subCodes[] =  Auth::guard('teacher')->user()->class_code4;
+                    $subCodes[] =  Auth::guard('teacher')->user()->class_code5;
+                    $subCodes[] =  Auth::guard('teacher')->user()->class_code6;
+                    $subCodes[] =  Auth::guard('teacher')->user()->class_code7;
+                    $subCodes[] =  Auth::guard('teacher')->user()->class_code8;
+                    $subCodes[] =  Auth::guard('teacher')->user()->class_code9;
+                    $subCodes[] =  Auth::guard('teacher')->user()->class_code10;
+                    $subCodes[] =  Auth::guard('teacher')->user()->class_code11;
+                    
+                    $classCodes = subCode::all()->sortBy("class");
+        
+                    $liveSubCodes = subCode::all()->where('id',$id);
+                   foreach($liveSubCodes as $liveSubCode){
+                       $class = $liveSubCode->class;
+                       $subject = $liveSubCode->subject;
+                   }
+                   
+                    if(!(isset($class))){
+                        return back()->with('failed',"No record found");
+                    }
+                    $users = liveClassAttendence::all()->where('class',$class)->where('subject',$subject)->sortBy('created_at');
+                    
+                        return view('teacher/liveClassAttendence', compact('subCodes','classCodes','users','class','subject'));    
+                
+                    }
     }
 
     

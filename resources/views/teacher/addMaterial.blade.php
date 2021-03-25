@@ -14,12 +14,12 @@
 
 @section('content')
 @if (session('status'))
-    <div class="alert alert-success b-round  mt-3 " >
+    <div class="alert alert-success b-round  mt-3 " window.location.reload()>
         {{ session('status') }}
     </div>
 @endif
 @if (session('failed'))
-<div class="alert alert-danger b-round  mt-3 ">
+<div class="alert alert-danger b-round  mt-3 " window.location.reload()>
     {{ session('failed') }}
 </div>
 @endif

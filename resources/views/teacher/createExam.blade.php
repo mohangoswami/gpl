@@ -46,6 +46,7 @@
             </ul>
 
             <!-- Tab panes -->
+            <div class="text-right"><a class="btn btn-primary mt-3" href="http://forms.google.com/" target="_blank">Google Forms<a></div>
             <div class="tab-content">
                 <div class="tab-pane active p-3" id="pdf" role="tabpanel">
                    
@@ -97,7 +98,7 @@
                                         </div>
                                         <div class="form-group mt-3">
                                             <label class="mb-3">Maximum Marks</label>
-                                            <input required id="demo0" type="text" value="55" name="demo0" data-bts-min="0" data-bts-max="100" data-bts-init-val="" data-bts-step="1" data-bts-decimal="0" data-bts-step-interval="100" data-bts-force-step-divisibility="round" data-bts-step-interval-delay="500" data-bts-prefix="" data-bts-postfix="" data-bts-prefix-extra-class="" data-bts-postfix-extra-class="" data-bts-booster="true" data-bts-boostat="10" data-bts-max-boosted-step="false" data-bts-mousewheel="true" data-bts-button-down-class="btn btn-default" data-bts-button-up-class="btn btn-default"/>
+                                            <input required id="demo0" type="text" value="100" name="demo0" data-bts-min="0" data-bts-max="100" data-bts-init-val="" data-bts-step="1" data-bts-decimal="0" data-bts-step-interval="100" data-bts-force-step-divisibility="round" data-bts-step-interval-delay="500" data-bts-prefix="" data-bts-postfix="" data-bts-prefix-extra-class="" data-bts-postfix-extra-class="" data-bts-booster="true" data-bts-boostat="10" data-bts-max-boosted-step="false" data-bts-mousewheel="true" data-bts-button-down-class="btn btn-default" data-bts-button-up-class="btn btn-default"/>
                                         </div>
                                         <button type="submit" class="btn btn-gradient-primary">Submit</button>
                                         <button type="button" class="btn btn-gradient-danger">Cancel</button>
@@ -169,7 +170,7 @@
                                             </div>
                                             <div class="form-group mt-3">
                                                 <label class="mb-3">Maximum Marks</label>
-                                                <input required id="demo0" type="text" value="55" name="demo0" data-bts-min="0" data-bts-max="100" data-bts-init-val="" data-bts-step="1" data-bts-decimal="0" data-bts-step-interval="100" data-bts-force-step-divisibility="round" data-bts-step-interval-delay="500" data-bts-prefix="" data-bts-postfix="" data-bts-prefix-extra-class="" data-bts-postfix-extra-class="" data-bts-booster="true" data-bts-boostat="10" data-bts-max-boosted-step="false" data-bts-mousewheel="true" data-bts-button-down-class="btn btn-default" data-bts-button-up-class="btn btn-default"/>
+                                                <input required id="demo0" type="text" value="100" name="demo0" data-bts-min="0" data-bts-max="100" data-bts-init-val="" data-bts-step="1" data-bts-decimal="0" data-bts-step-interval="100" data-bts-force-step-divisibility="round" data-bts-step-interval-delay="500" data-bts-prefix="" data-bts-postfix="" data-bts-prefix-extra-class="" data-bts-postfix-extra-class="" data-bts-booster="true" data-bts-boostat="10" data-bts-max-boosted-step="false" data-bts-mousewheel="true" data-bts-button-down-class="btn btn-default" data-bts-button-up-class="btn btn-default"/>
                                             </div>
                                             
                                         <button type="submit" class="btn btn-gradient-primary">Submit</button>
@@ -231,7 +232,7 @@
                                         </div>
                                         <div class="form-group mt-3">
                                             <label class="mb-3">Maximum Marks</label>
-                                            <input required id="demo0" type="text" value="55" name="demo0" data-bts-min="0" data-bts-max="100" data-bts-init-val="" data-bts-step="1" data-bts-decimal="0" data-bts-step-interval="100" data-bts-force-step-divisibility="round" data-bts-step-interval-delay="500" data-bts-prefix="" data-bts-postfix="" data-bts-prefix-extra-class="" data-bts-postfix-extra-class="" data-bts-booster="true" data-bts-boostat="10" data-bts-max-boosted-step="false" data-bts-mousewheel="true" data-bts-button-down-class="btn btn-default" data-bts-button-up-class="btn btn-default"/>
+                                            <input required id="demo0" type="text" value="100" name="demo0" data-bts-min="0" data-bts-max="100" data-bts-init-val="" data-bts-step="1" data-bts-decimal="0" data-bts-step-interval="100" data-bts-force-step-divisibility="round" data-bts-step-interval-delay="500" data-bts-prefix="" data-bts-postfix="" data-bts-prefix-extra-class="" data-bts-postfix-extra-class="" data-bts-booster="true" data-bts-boostat="10" data-bts-max-boosted-step="false" data-bts-mousewheel="true" data-bts-button-down-class="btn btn-default" data-bts-button-up-class="btn btn-default"/>
                                         </div>
                                         <button type="submit" class="btn btn-gradient-primary">Submit</button>
                                         <button type="button" class="btn btn-gradient-danger">Cancel</button>
@@ -281,7 +282,7 @@
                                         </div>                                   
                                         <div class="form-group">
                                             <label for="lable_title">Google Form Link</label>
-                                            <input name="formLink" class="form-control" type="text" placeholder="Paste form Link Here" id="formLink">
+                                            <input name="formLink" class="form-control" type="text" placeholder="Paste form Link Here" id="formLink" required>
                                         </div>
                                         <label class="mb-3">Exam - Start and End time</label>                                          
                                         <div class="input-group">  
@@ -293,7 +294,7 @@
                                         </div>
                                         <div class="form-group mt-3">
                                             <label class="mb-3">Maximum Marks</label>
-                                            <input required id="demo0" type="text" value="55" name="demo0" data-bts-min="0" data-bts-max="100" data-bts-init-val="" data-bts-step="1" data-bts-decimal="0" data-bts-step-interval="100" data-bts-force-step-divisibility="round" data-bts-step-interval-delay="500" data-bts-prefix="" data-bts-postfix="" data-bts-prefix-extra-class="" data-bts-postfix-extra-class="" data-bts-booster="true" data-bts-boostat="10" data-bts-max-boosted-step="false" data-bts-mousewheel="true" data-bts-button-down-class="btn btn-default" data-bts-button-up-class="btn btn-default"/>
+                                            <input required id="demo0" type="text" value="100" name="demo0" data-bts-min="0" data-bts-max="100" data-bts-init-val="" data-bts-step="1" data-bts-decimal="0" data-bts-step-interval="100" data-bts-force-step-divisibility="round" data-bts-step-interval-delay="500" data-bts-prefix="" data-bts-postfix="" data-bts-prefix-extra-class="" data-bts-postfix-extra-class="" data-bts-booster="true" data-bts-boostat="10" data-bts-max-boosted-step="false" data-bts-mousewheel="true" data-bts-button-down-class="btn btn-default" data-bts-button-up-class="btn btn-default"/>
                                         </div>
                                         <div class="form-group form-check">
                                             <input name="formStudentWorkIsrequire" id="formStudentWorkIsrequire" type="checkbox" class="form-check-input" id="exampleCheck1">

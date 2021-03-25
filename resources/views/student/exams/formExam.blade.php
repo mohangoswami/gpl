@@ -32,8 +32,8 @@
                         <div >
                             <div>@if($finalSubmit==true)
                                 <h3 class="bg-success text-danger b-round"><center><i class="mdi mdi-check-all mr-1"></i>Submitted Done</center></h3>
-                                @else
-                                <a href="{{$exam->id}}/submittedDone"  class="btn btn-danger b-round btn-lg btn-block mt-1" ><i class="mdi mdi-send mr-2"></i>Final Submit</a>
+                                 @else
+                                <a onclick="return confirm('Are you sure want to final submit?')"  href="{{$exam->id}}/submittedDone"  class="btn btn-danger b-round btn-lg btn-block mt-1" ><i class="mdi mdi-send mr-2"></i>Final Submit</a>
                                 @endif
                             </div>
                         </div>

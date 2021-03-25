@@ -39,6 +39,7 @@ class ExamController extends Controller
       }
 
       public function attemptExam($id){
+       
         foreach(Auth::user()->unreadNotifications as $notification){
           if($notification->data['classworkId']==$id && $notification->data['workType']=='Exam'){
             $notification->markAsRead();
@@ -55,10 +56,18 @@ class ExamController extends Controller
             $finalSubmit = true;
           }
         }
-        
+         
         foreach($exams as $exam){
           $examId =$exam->id;
           $uploadFiles = studentExamWorks::all()->where('email',Auth::user()->email)->where('titleId',$examId);
+
+           
+          $users = User::all()->where('email',Auth::user()->email);
+          foreach($users as $user){
+            if($user->exam_permission == 0){
+              return view('student.exams.examBlock', compact('exams','subCodes','id','finalSubmit'));
+            }
+          }
 
         if($exam->type =='FORM'){
             return view('student.exams.formExam', compact('exams','subCodes','id','finalSubmit'));
@@ -78,6 +87,7 @@ class ExamController extends Controller
 
           foreach ($getClassSubs as $getClassSub) {
          //   dd($getClassSub);
+              $teacherEmail = $getClassSub->email;
               $class = $getClassSub->class;
               $subject = $getClassSub->subject;
               $title = $getClassSub->title;
@@ -89,10 +99,11 @@ class ExamController extends Controller
           $stuWork->class = $class;
           $stuWork->name = Auth::user()->name;
           $stuWork->email = Auth::user()->email;
+          $stuExam->teacherEmail = $teacherEmail;
           $stuWork->subject = $subject;        
           $stuWork->title = $title;
           $userName = Auth::user()->name;
-          $fileUrl = 'https://upto12th.s3.ap-south-1.amazonaws.com/' . $class . '/' . $subject . '/' . 'exams' . '/' . $title . '/' . $userName . '/' . $request->file->getClientOriginalName();
+          $fileUrl = 'https://brefnew-dev-storage-1xk3pgbkrilzi.s3.amazonaws.com/' . $class . '/' . $subject . '/' . 'exams' . '/' . $title . '/' . $userName . '/' . $request->file->getClientOriginalName();
           $stuWork->fileUrl = $fileUrl;
           $stuWork->fileSize = $request->file('file')->getSize();
                    $stuWork->save();
@@ -140,6 +151,7 @@ public function deleteStuExamWroks($id,$examId){
           $getClassSubs = DB::select('SELECT * FROM exams WHERE id = ?' , [$id]);
           //  dd($getClassSub->class);
             foreach ($getClassSubs as $getClassSub) {
+                $teacherEmail = $getClassSub->email;
                 $examId = $getClassSub->id;
                 $class = $getClassSub->class;
                 $subject = $getClassSub->subject;
@@ -152,6 +164,7 @@ public function deleteStuExamWroks($id,$examId){
             $stuExam->class = $class;
             $stuExam->name = Auth::user()->name;
             $stuExam->email = Auth::user()->email;
+            $stuExam->teacherEmail = $teacherEmail;
             $stuExam->subject = $subject;        
             $stuExam->title = $title;
             $stuExam->submittedDone = 1;

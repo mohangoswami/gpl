@@ -66,7 +66,7 @@
                             <td>{{$subCode->Sunday}}</td>
                             <td>{{date('H:i', strtotime($subCode->start_time))}}</td>
                             <td>{{date('H:i', strtotime($subCode->end_time))}}</td>
-                            <td>{{$subCode->link_url}}</td>
+                            <td><a href="{{$subCode->link_url}}"> {{$subCode->link_url}}</a></td>
                             <td>
                             <a href="editLiveClass/{{$subCode->id}}"><i class="fas fa-edit text-info font-16"></i></a>
                               

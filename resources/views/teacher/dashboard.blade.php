@@ -6,9 +6,57 @@
 <link href="{{ URL::asset('plugins/datatables/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
 <!-- Responsive datatable examples -->
 <link href="{{ URL::asset('plugins/datatables/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" /> 
+<!-- Top Scroller-->
+<link href="{{ URL::asset('plugins/ticker/jquery.jConveyorTicker.css')}}" rel="stylesheet" type="text/css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KMDBFHEBCQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KMDBFHEBCQ');
+</script>
 @stop
 
 @section('content')
+ 
+
+<!-- Flash News -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="wrap">
+                    <div class="jctkr-label">
+                        <span><i class="fas fa-exchange-alt mr-2"></i><i class="fas fa-bullhorn"></i></span>
+                    </div>
+                    <div class="js-conveyor-example">
+                        <ul>
+                            @php
+                                $n=1;
+                            @endphp
+                            @isset($flashNews)
+                            @foreach ($flashNews as $news)
+                                @if($n<=5)
+                            <li>
+                                <span><i class="fas fa-rss "></i> </span>
+                                <span class="usd-rate font-14"><b>{{$news->news}}</b></span>
+                                <span class="mb-0 font-12 text-success">{{$news->created_at->format('d M')}}</span>
+                            </li>
+                                @endif
+                                @php
+                                    $n=$n+1;
+                                @endphp
+                            @endforeach
+                            @endisset
+                        </ul>
+                    </div>
+                </div>    
+            </div><!--end card-body-->
+        </div><!--end card-->
+    </div><!--end col-->
+</div>  <!--end row-->
 
 <div class="row">
 
@@ -22,6 +70,9 @@
                         <div class="slimscroll crm-dash-activity">
                             <div class="activity">
                                 @foreach($classworks as $classwork)
+                                @if($classwork->type == 'TOPIC')
+                                 @continue
+                                @endif
                                 <div class="activity-info">
                                     <div class="icon-info-activity">
                                         @if($classwork->type=='IMG')
@@ -110,95 +161,9 @@
 
         </div>
     </div>
+</div>
 
-    <!--Data table-->
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <button onclick="window.location.href='/teacher/create_classwork'" class="btn btn-gradient-primary px-4 float-right mt-0 mb-3"><i class="mdi mdi-plus-circle-outline mr-2"></i>Add New Work</button>
-                    <h4 class="header-title mt-0">All classwork</h4> 
-                    <div class="table-responsive dash-social">
-                        <table id="datatable" class="table">
-                            <thead class="thead-light">
-                            <tr>
-                                <th>Customer Name</th>
-                                <th>Email</th>
-                                <th>Phone No</th>                                                    
-                                <th>Country</th>
-                                <th>Action</th>
-                            </tr><!--end tr-->
-                            </thead>
-
-                            <tbody>
-                            <tr>
-                                <td><img src="{{ URL::asset('assets/images/users/user-10.jpg')}}" alt="" class="thumb-sm rounded-circle mr-2">Donald Gardner<small class="badge badge-soft-pink ml-1">New</small></td>
-                                <td>xyx@gmail.com</td>
-                                <td>+123456789</td>
-                                <td>Tokyo, JAP</td>
-                                <td>                                                       
-                                    <a href="#" class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>
-                                    <a href="#"><i class="fas fa-trash-alt text-danger font-16"></i></a>
-                                </td>
-                            </tr><!--end tr-->
-                            <tr>
-                                <td><img src="{{ URL::asset('assets/images/users/user-9.jpg')}}" alt="" class="thumb-sm rounded-circle mr-2">Matt Rosales</td>
-                                <td>xyx@gmail.com</td>
-                                <td>+123456789</td>
-                                <td>San Francisco USA</td>
-                                <td>                                                       
-                                    <a href="#" class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>
-                                    <a href="#"><i class="fas fa-trash-alt text-danger font-16"></i></a>
-                                </td>
-                            </tr><!--end tr-->
-                            <tr>
-                                <td><img src="{{ URL::asset('assets/images/users/user-8.jpg')}}" alt="" class="thumb-sm rounded-circle mr-2">Michael Hill<small class="badge badge-soft-blue ml-1">New</small></td>
-                                <td>xyx@gmail.com</td>
-                                <td>+123456789</td>
-                                <td>Sydeny AUS</td>
-                                <td>                                                       
-                                    <a href="#" class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>
-                                    <a href="#"><i class="fas fa-trash-alt text-danger font-16"></i></a>
-                                </td>
-                            </tr><!--end tr-->
-                            <tr>
-                                <td><img src="{{ URL::asset('assets/images/users/user-7.jpg')}}" alt="" class="thumb-sm rounded-circle mr-2">Nancy Flanary</td>
-                                <td>xyx@gmail.com</td>
-                                <td>+123456789</td>
-                                <td>Berlin GER</td>
-                                <td>                                                       
-                                    <a href="#" class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>
-                                    <a href="#"><i class="fas fa-trash-alt text-danger font-16"></i></a>
-                                </td>
-                            </tr><!--end tr-->
-                            <tr>
-                                <td><img src="{{ URL::asset('assets/images/users/user-6.jpg')}}" alt="" class="thumb-sm rounded-circle mr-2">Dorothy Key</td>
-                                <td>xyx@gmail.com</td>
-                                <td>+123456789</td>
-                                <td>New York USA</td>
-                                <td>                                                       
-                                    <a href="#" class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>
-                                    <a href="#"><i class="fas fa-trash-alt text-danger font-16"></i></a>
-                                </td>
-                            </tr><!--end tr-->
-                            <tr>
-                                <td><img src="{{ URL::asset('assets/images/users/user-5.jpg')}}" alt="" class="thumb-sm rounded-circle mr-2">Joseph Cross</td>
-                                <td>xyx@gmail.com</td>
-                                <td>+123456789</td>
-                                <td>Tokyo JAP</td>
-                                <td>                                                       
-                                    <a href="#" class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>
-                                    <a href="#"><i class="fas fa-trash-alt text-danger font-16"></i></a>
-                                </td>
-                            </tr><!--end tr-->
-                                                                            
-                            </tbody>
-                        </table>                    
-                    </div>                                         
-                </div><!--end card-body--> 
-            </div><!--end card--> 
-        </div> <!--end col-->                               
-    </div><!--end row--> 
+    
 @endsection
 
 
@@ -208,5 +173,8 @@
         <script src="{{ URL::asset('plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
         <script src="{{ URL::asset('plugins/peity-chart/jquery.peity.min.js') }}"></script>
         <script src="{{ URL::asset('assets/pages/jquery.analytics_customers.init.js') }}"></script>
+
+        <script src="{{ URL::asset('plugins/ticker/jquery.jConveyorTicker.min.js')}}"></script>
+        <script src="{{ URL::asset('assets/pages/jquery.crypto-news.init.js')}}"></script>
 
 @stop

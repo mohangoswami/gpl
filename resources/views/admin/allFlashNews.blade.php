@@ -63,7 +63,7 @@
                                 <td>{{$news->news}}</td>
                                 
                                 <td>                                                       
-                                    <a href="/admin/deleteFlashNews/{{$news->id}}" class="delete" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Delete" data-trigger="hover" ><i class="fas fa-trash-alt text-danger font-16"></i></a>
+                                    <a onclick="return confirm('Are you sure want to delete?')" href="/admin/deleteFlashNews/{{$news->id}}" class="delete" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Delete" data-trigger="hover" ><i class="fas fa-trash-alt text-danger font-16"></i></a>
                                 </td>
                             </tr><!--end tr-->
                             @endif

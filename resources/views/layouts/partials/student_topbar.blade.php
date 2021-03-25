@@ -33,9 +33,11 @@
                                 
                                 <!-- item-->
                             @if($notification->data['workType']=='Classwork')
+                                @if($notification->data['type']!='' && $notification->data['type']!='TOPIC')
                             <a href="/student/notificationClasswork/{{$notification->data['classworkId']}}/{{$notification->id}}" class="dropdown-item py-3">
+                                @endif
                             @endif
-                            @if($notification->data['workType']=='Exam')
+                                @if($notification->data['workType']=='Exam')
                             <a href="/student/notificationExam/{{$notification->data['classworkId']}}/{{$notification->id}}" class="dropdown-item py-3">
                             @endif
                                 <small class="float-right text-muted pl-2"> {{$notification->created_at->format('d/M')}}</small>
@@ -100,7 +102,7 @@
     
                 <ul class="list-unstyled topbar-nav mb-0">  
                     <li>
-                        <a href="/crm/crm-index">
+                        <a href="/home">
                             <span class="responsive-logo">
                                 <img src="{{ URL::asset('assets/images/gpl_logo.png')}}" alt="logo-small" class="logo-sm align-self-center" height="34">
                             </span>

@@ -1,9 +1,9 @@
   <!-- leftbar-tab-menu -->
         <div class="leftbar-tab-menu">
             <div class="main-icon-menu">
-                <a href="{{ URL::asset('analytics/analytics-index')}}" class="logo logo-metrica d-block text-center">
+                <a href="#" class="logo logo-metrica d-block text-center">
                     <span>
-                        <img src="{{ URL::asset('assets/images/gpl_logo2.png')}}" alt="logo-small" class="logo-sm">
+                        <img src="{{ URL::asset('assets/images/gpl_logo2.png')}}" alt="logo-small" class="rounded-circle logo-sm">
                     </span>
                 </a>
                

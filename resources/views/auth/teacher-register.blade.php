@@ -3,6 +3,8 @@
 @section('title', 'Metrica - Admin & Dashboard Template')
 
 @section('headerStyle')
+<link href="{{ URL::asset('plugins/dropify/css/dropify.min.css')}}" rel="stylesheet">
+
         <!-- Plugins css -->
 <link href="{{ URL::asset('plugins/daterangepicker/daterangepicker.css')}}" rel="stylesheet" />
 <link href="{{ URL::asset('plugins/select2/select2.min.css')}}" rel="stylesheet" type="text/css" />
@@ -29,7 +31,7 @@
                     <div class="card-header">{{ __('Teacher Register') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('teacher.register.submit') }}">
+                        <form method="POST" action="{{ route('teacher.register.submit') }}"  enctype="multipart/form-data">
                             @csrf
 
                             <div class="form-group row">
@@ -85,14 +87,21 @@
                             <div class="form-group row">
                            
                                 <label class="col-md-4 col-form-label text-md-right">Multiple Select</label>
-                                <div class="col-md-6">
+                            <div class="col-md-6">
                                 <select id="subCodes[]" name="subCodes[]" class="form-control select2 mb-3 select2-multiple" style="width: 100%" multiple="multiple" data-placeholder="Select Class & Subject">
                                     @foreach($subCodes as $subcode)
                                 <option value="{{$subcode->id}}">{{$subcode->class}} - {{$subcode->subject}}</option>
                                    @endforeach
                                 </select> 
                             </div> <!-- end col --> 
-                            </div>    
+                        </div>    
+
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right">Upload Image</label>
+                            <div class="col-md-6">
+                                   <input name="file" type="file" id="file" class="dropify form-control" />                                                   
+                                </div><!--end col-->
+                            </div><!--end col-->
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
@@ -111,6 +120,8 @@
 
 
 @section('footerScript')
+<script src="{{ URL::asset('assets/pages/jquery.form-upload.init.js')}}"></script>
+<script src="{{ URL::asset('plugins/dropify/js/dropify.min.js')}}"></script>
 <!-- Plugins js -->
         <script src="{{ URL::asset('plugins/moment/moment.js')}}"></script>
         <script src="{{ URL::asset('plugins/daterangepicker/daterangepicker.js')}}"></script>

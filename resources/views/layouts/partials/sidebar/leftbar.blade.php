@@ -3,7 +3,7 @@
             <div class="main-icon-menu">
                 <a href="/crm/crm-index" class="logo logo-metrica d-block text-center">
                     <span>
-                        <img src="{{ URL::asset('assets/images/gpl_logo2.png')}}" alt="logo-small" class="logo-sm">
+                        <img src="{{ URL::asset('assets/images/gpl_logo2.png')}}" alt="logo-small" class="rounded-circle logo-sm">
                     </span>
                 </a>
                 <nav class="nav">

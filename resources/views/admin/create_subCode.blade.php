@@ -28,11 +28,11 @@
                     @csrf
                     <div class="form-group">
                         <label for="lable_class">Class</label>
-                        <input class="form-control" type="text" placeholder="Enter Class" id="grade" name="grade">
+                        <input class="form-control" type="text" placeholder="Enter Class" id="grade" name="grade" required>
                     </div>
                     <div class="form-group">
                         <label for="lable_subject">Subject</label>
-                        <input class="form-control" type="text" placeholder="Enter subject" id="subject" name="subject">
+                        <input class="form-control" type="text" placeholder="Enter subject" id="subject" name="subject" required>
                     </div>
                    
                     <button type="submit" class="btn btn-gradient-primary">Create</button>

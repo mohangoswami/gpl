@@ -94,12 +94,13 @@
               $Sunday=Null;
           }
           $check = false;
+          if(isset($days)){
           foreach ($days as $day) {
               if($day==date('l')){
                   $check = true;
               }
           }
-
+        }
           if($currentTimestamp >= $startTimestamp && $currentTimestamp < $endTimestamp){
            
             if($Monday==date('l')){
@@ -144,7 +145,7 @@
                         </div>
                         @if($liveat==false)
                         <div class="button-list btn-social-icon">                                                
-                            <a href="{{$subCode->link_url}}" class="btn btn-{{$opposite_color[$c]}} btn-circle " >
+                            <a href="/student/liveAttendence/{{$subCode->id}}" class="btn btn-{{$opposite_color[$c]}} btn-circle " >
                                 Join 
                             </a>
                         </div>

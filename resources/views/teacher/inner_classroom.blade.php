@@ -125,7 +125,7 @@
                                                 </a>
                                                             <div class=" ml-3 align-items-start">
                                                                 <span ><a href="/teacher/edit_classwork/{{$pdfLoop->id}}" class="mr-1 "><i class="fas fa-edit text-info font-16"></i></a></span>
-                                                                <span> <a href="/teacher/classroom/{{$pdfLoop->id}}/delete"><i class="mr-1 fas fa-trash-alt text-danger font-16"></i></a></span>
+                                                                <span> <a onclick="return confirm('Are you sure want to delete?')" href="/teacher/classroom/{{$pdfLoop->id}}/delete"><i class="mr-1 fas fa-trash-alt text-danger font-16"></i></a></span>
                                                                 <span>  <a href="/teacher/classworkAttendence/{{$pdfLoop->id}}" class="mr-1" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Attendence" data-trigger="hover"><i class="fas fa-address-card text-info font-16"></i></a></span>
                                                                 <span class="mt-3 badge badge-soft-purple">{{$pdfLoop->created_at->format('d/M')}}</span>
                                                             </div>
@@ -164,7 +164,7 @@
                                                     </a>
                                                                 <div class=" ml-3 align-items-start">
                                                                     <span ><a href="/teacher/edit_classwork/{{$pdfLoop->id}}" class="mr-2 "><i class="fas fa-edit text-info font-16"></i></a></span>
-                                                                    <span> <a href="/teacher/classroom/{{$pdfLoop->id}}/delete"><i class="fas fa-trash-alt text-danger font-16"></i></a></span>
+                                                                    <span> <a onclick="return confirm('Are you sure want to delete?')" href="/teacher/classroom/{{$pdfLoop->id}}/delete"><i class="fas fa-trash-alt text-danger font-16"></i></a></span>
                                                                     <span class="mt-3 badge badge-soft-purple">{{$pdfLoop->created_at->format('d/M')}}</span>
                                                                 </div>
                                                     </li>
@@ -203,7 +203,7 @@
                                                     </a>
                                                                 <div class=" ml-3 align-items-start">
                                                                     <span ><a href="/teacher/edit_classwork/{{$pdfLoop->id}}" class="mr-2 "><i class="fas fa-edit text-info font-16"></i></a></span>
-                                                                    <span> <a href="/teacher/classroom/{{$pdfLoop->id}}/delete"><i class="fas fa-trash-alt text-danger font-16"></i></a></span>
+                                                                    <span> <a onclick="return confirm('Are you sure want to delete?')" href="/teacher/classroom/{{$pdfLoop->id}}/delete"><i class="fas fa-trash-alt text-danger font-16"></i></a></span>
                                                                     <span class="mt-3 badge badge-soft-purple">{{$pdfLoop->created_at->format('d/M')}}</span>
                                                                 </div>
                                                     </li>
@@ -240,7 +240,7 @@
                                                     </a>
                                                                 <div class=" ml-3 align-items-start">
                                                                     <span ><a href="/teacher/edit_classwork/{{$pdfLoop->id}}" class="mr-2 "><i class="fas fa-edit text-info font-16"></i></a></span>
-                                                                    <span> <a href="/teacher/classroom/{{$pdfLoop->id}}/delete"><i class="fas fa-trash-alt text-danger font-16"></i></a></span>
+                                                                    <span> <a  onclick="return confirm('Are you sure want to delete?')" href="/teacher/classroom/{{$pdfLoop->id}}/delete"><i class="fas fa-trash-alt text-danger font-16"></i></a></span>
                                                                     <span class="mt-3 badge badge-soft-purple">{{$pdfLoop->created_at->format('d/M')}}</span>
                                                                 </div>
                                                     </li>

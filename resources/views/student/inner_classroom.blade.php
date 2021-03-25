@@ -124,7 +124,7 @@
                                                    
                                                     @foreach ($DBtitles as $pdfLoop)
                                                         @if($pdfLoop->type=='IMG')
-                                                        <a href="{{$pdfLoop->fileUrl}}" target="_blank" >
+                                                        <a href="/student/homework/{{$pdfLoop->id}}" >
                                                          <li class="list-group-item align-items-center d-flex justify-content-between">
                                                         <div class="media">
                                                             <img src="{{ URL::asset('assets/images/files logo/jpeg.jpeg')}}" class="mr-3 thumb-sm align-self-center rounded-circle" alt="...">
@@ -155,8 +155,8 @@
                                                    
                                                     @foreach ($DBtitles as $pdfLoop)
                                                         @if($pdfLoop->type=='DOCS')
-                                                        <a href="{{$pdfLoop->fileUrl}}" target="_blank" >
-                                                         <li class="list-group-item align-items-center d-flex justify-content-between">
+                                                        <a href="/student/homework/{{$pdfLoop->id}}" >
+                                                            <li class="list-group-item align-items-center d-flex justify-content-between">
                                                         <div class="media">
                                                             <img src="{{ URL::asset('assets/images/files logo/docs.png')}}" class="mr-3 thumb-sm align-self-center rounded-circle" alt="...">
                                                             <div class="media-body align-self-center"> 
@@ -188,8 +188,8 @@
                                                    @endphp
                                                     @foreach ($DBtitles as $pdfLoop)
                                                         @if($pdfLoop->type=='YOUTUBE')
-                                                        <a href="{{$pdfLoop->youtubeLink}}" target="_blank" >
-                                                         <li class="list-group-item align-items-center d-flex justify-content-between">
+                                                        <a href="{{$pdfLoop->youtubeLink}}" >
+                                                            <li class="list-group-item align-items-center d-flex justify-content-between">
                                                         <div class="media">
                                                             <img src="{{ URL::asset('assets/images/files logo/youtubeNew.png')}}" class="mr-3 thumb-sm align-self-center rounded-circle" alt="...">
                                                             <div class="media-body align-self-center"> 

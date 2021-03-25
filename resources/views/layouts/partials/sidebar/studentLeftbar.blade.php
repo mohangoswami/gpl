@@ -1,7 +1,7 @@
   <!-- leftbar-tab-menu -->
   <div class="leftbar-tab-menu">
     <div class="main-icon-menu">
-        <a href="{{ URL::asset('analytics/analytics-index')}}" class="logo logo-metrica d-block text-center">
+        <a href="/home" class="logo logo-metrica d-block text-center">
             <span>
                 <img src="{{ URL::asset('assets/images/gpl_logo2.png')}}" alt="logo-small" class="rounded-circle logo-sm">
             </span>
@@ -18,10 +18,10 @@
             <a href="#MetricaUikit" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Live Classes" data-trigger="hover">
                 <i data-feather="video" class="align-self-center menu-icon icon-dual"></i>
             </a><!--end MetricaUikit-->
-            <!--
-            <a href="#MetricaPages" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Pages" data-trigger="hover">
-                <i data-feather="copy" class="align-self-center menu-icon icon-dual"></i>             
-            </a><!--end MetricaPages-->
+           
+            <a href="#MetricaResults" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Results" data-trigger="hover">
+                <i data-feather="clipboard" class="align-self-center menu-icon icon-dual"></i>             
+            </a><!--end MetricaResults-->
             <!--
             <a href="#MetricaAuthentication" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Authentication" data-trigger="hover">
                 <i data-feather="lock" class="align-self-center menu-icon icon-dual"></i>
@@ -86,20 +86,13 @@
                 
             </div><!-- end Others -->
 
-            <div id="MetricaPages" class="main-icon-menu-pane">
+            <div id="MetricaResults" class="main-icon-menu-pane">
                 <div class="title-box">
-                    <h6 class="menu-title">Pages</h6>        
+                    <h6 class="menu-title">Results</h6>        
                 </div>
                 <ul class="nav">
-                    <li class="nav-item"><a class="nav-link" href="/pages/pages-profile">Profile</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/pages/pages-tour">Tour</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/pages/pages-timeline">Timeline</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/pages/pages-treeview">Treeview</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/pages/pages-starter">Starter Page</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/pages/pages-pricing">Pricing</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/pages/pages-blogs">Blogs</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/pages/pages-faq">FAQs</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/pages/pages-gallery">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/student/results">All Results</a></li>
+                  
                 </ul>
             </div><!-- end Pages -->
             <div id="MetricaAuthentication" class="main-icon-menu-pane">

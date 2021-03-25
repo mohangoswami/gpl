@@ -85,7 +85,7 @@
                                 <td>{{$exam->maxMarks}}</td>
                                 <td>                                                       
                                     <a href="/teacher/editExam/{{$exam->id}}" class="mr-2" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Edit" data-trigger="hover"><i class="fas fa-edit text-info font-16"></i></a>
-                                    <a href="/teacher/deleteExam/{{$exam->id}}" class="delete" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Delete" data-trigger="hover" ><i class="fas fa-trash-alt text-danger font-16"></i></a>
+                                    <a onclick="return confirm('Are you sure want to delete?')" href="/teacher/deleteExam/{{$exam->id}}" class="delete" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Delete" data-trigger="hover" ><i class="fas fa-trash-alt text-danger font-16"></i></a>
                                     <a href="/teacher/classworkAttendence/{{$exam->id}}" class="mr-2" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Attendence" data-trigger="hover"><i class="fas fa-address-card text-info font-16"></i></a>
                                 </td>
                             </tr><!--end tr-->

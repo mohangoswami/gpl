@@ -56,7 +56,7 @@
     
                 <ul class="list-unstyled topbar-nav mb-0">  
                     <li>
-                        <a href="/crm/crm-index">
+                        <a href="/home">
                             <span class="responsive-logo">
                                 <img src="{{ URL::asset('assets/images/gpl_logo.png')}}" alt="logo-small" class="logo-sm align-self-center" height="34">
                             </span>

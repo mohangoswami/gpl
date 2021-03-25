@@ -1,0 +1,142 @@
+service: brefnew
+useDotenv: true
+provider:
+    name: aws
+    # The AWS region in which to deploy (us-east-1 is the default)
+    region: us-east-1
+    # The stage of the application, e.g. dev, production, staging… ('dev' is the default)
+    stage: dev
+    runtime: provided.al2
+    lambdaHashingVersion: '20201221'
+
+    apiGateway:
+        shouldStartNameWithService: true
+        binaryMediaTypes:
+            - '*/*'
+    environment:
+        BREF_BINARY_RESPONSES: '1'
+        # Serve static assets via CloudFront
+        ASSET_URL: ${self:custom.asset_url}
+        MIX_ASSET_URL: 'https://brefnew.s3.amazonaws.com'
+        # environment variable for Laravel
+        AWS_BUCKET: !Ref Storage
+        CACHE_DRIVER: dynamodb
+        DYNAMODB_CACHE_TABLE: !Ref Cache
+            # Log to stderr to get CloudWatch Logs to pick it up
+        LOG_CHANNEL: stderr
+        # Store session in a DynamoDB table
+        QUEUE_CONNECTION: sqs
+        SESSION_DRIVER: dynamodb
+        SESSION_STORE: dynamodb
+        SQS_QUEUE: !Ref Queue
+        SQS_PREFIX: https://sqs.ap-south-1.amazonaws.com/940779068650
+        VIEW_COMPILED_PATH: /tmp/storage/framework/views    
+        # environment variable for Laravel
+
+    iamRoleStatements:
+        # Allow Lambda to read and write files in the S3 buckets
+        -   Effect: Allow
+            Action: s3:*
+            Resource:
+                - !Sub '${Storage.Arn}' # the storage bucket
+                - !Sub '${Storage.Arn}/*' # and everything inside
+        -   Effect: 'Allow'
+            Action:
+                - 'dynamodb:GetItem'
+                - 'dynamodb:PutItem'
+            Resource:
+                - !GetAtt Cache.Arn
+        - Effect: 'Allow'
+          Action:
+                - 'sqs:SendMessage'
+          Resource:
+                - !GetAtt Queue.Arn
+package:
+    excludeDevDependencies: false
+    exclude:
+        - ./**
+    include:
+        - app/**
+        - bootstrap/**
+        - config/**
+        - database/**
+        - public/index.php
+        - public/mix-manifest.json
+        - resources/lang/**
+        - resources/views/**
+        - routes/**
+        - vendor/**
+        - artisan
+        - queue-handler.php
+
+
+functions:
+    # This function runs the Laravel website/API
+    web:
+        handler: public/index.php
+        timeout: 28 # in seconds (API Gateway has a timeout of 29 seconds)
+        layers:
+            - ${bref:layer.php-74-fpm}
+        events:
+           # -   httpApi: '*'
+            - http: 'ANY /'      
+            - http: 'ANY /{proxy+}'
+    artisan:
+        handler: artisan
+        description: 'Artisan console'
+        timeout: 120 # in seconds
+        layers:
+            - ${bref:layer.php-74} # PHP
+            - ${bref:layer.console} # The "console" layer
+resources:
+    Resources:
+        
+
+        Cache:
+          Type: AWS::DynamoDB::Table
+          Properties:
+            BillingMode: PAY_PER_REQUEST
+            AttributeDefinitions:
+            - AttributeName: key
+              AttributeType: S
+            KeySchema:
+            - AttributeName: key
+              KeyType: HASH
+    
+        Queue:
+          Type: AWS::SQS::Queue
+          Properties:
+            ReceiveMessageWaitTimeSeconds: 20
+            VisibilityTimeout: 120
+            
+        # The S3 bucket that stores the assets
+        Storage:
+            Type: AWS::S3::Bucket
+        
+        Assets:
+            Type: AWS::S3::Bucket
+            Properties:
+                CorsConfiguration:
+                    CorsRules:
+                        -   AllowedHeaders: ["*"]
+                            AllowedMethods: [GET]
+                            AllowedOrigins: ["*"]
+                            
+plugins:
+
+    # We need to include the Bref plugin
+    - ./vendor/bref/bref
+    - serverless-dotenv-plugin
+    - serverless-s3-sync
+
+custom:
+    
+    s3Sync:
+        # Sync public dir with assets to the assets bucket
+        - bucketName: brefnew
+          localDir: public
+          deleteRemoved: true
+          acl: public-read
+    asset_url: !Join
+        - ''
+        - - 'https://d2upeuydbq2hwb.cloudfront.net'

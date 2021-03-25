@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Teacher;
 use App\Admin;
 use App\subCode;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
-class teacherRegisterController extends Controller
+
+class TeacherRegisterController extends Controller
 {
     public function __construct()
     {
@@ -33,6 +36,7 @@ class teacherRegisterController extends Controller
             
         ]);
         try{
+
         $request['password'] = Hash::make($request->password);
         if(isset($request->subCodes[0])){
             $request['class_code0'] =  $request->subCodes[0];
@@ -73,8 +77,19 @@ class teacherRegisterController extends Controller
          if(isset($request->subCodes[12])){
             return redirect('teacher/register')->with('error','Failed -> Only 12 Subject wiil be allowed to a Teacher.');
         }
-                   
+        $teacherName = $request->name;
+        $fileUrl = 'https://gplschool.s3.ap-south-1.amazonaws.com/assets/images/teacherImg/' . $teacherName;
+        $request['teacherImg'] = $fileUrl;
+
         Teacher::create($request->all());
+        $file = $request->file('file');
+        $imageName = 'teacherImg/' . $teacherName;
+        if ($request->hasFile('file')) {
+         request()->file->move(public_path('assets/images/teacherImg'), $imageName);
+
+         //     Storage::disk('s3')->put($imageName, file_get_contents($file));
+   //     Storage::disk('s3')->setVisibility($imageName, 'public');
+        }
         return redirect()->intended(route('teacher.register'))->with('status','Congrats! Teacher register successfully');
     }
     catch(Exception $e){

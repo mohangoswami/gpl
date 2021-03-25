@@ -10,11 +10,13 @@ use App\classwork;
 use App\Exam;
 use App\Term;
 use App\stuHomeworkUpload;
+use App\liveClassAttendence;
 use Auth;
 use Illuminate\Support\Facades\Validator;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use App\Notifications\emailNotification;
+use App\studentExams;
 
 
  
@@ -61,8 +63,9 @@ class StudentController extends Controller
         $title = $topic->title;
         $teacherName = $topic->name;
         $subject= $topic->subject;
+        $class= $topic->class;
       }
-      $DBtitles = classwork::all()->where('title',$title)->sortByDesc('created_at');
+      $DBtitles = classwork::all()->where('class',$class)->where('subject',$subject)->where('title',$title)->sortByDesc('created_at');
  
       return view('student.inner_classroom', compact('DBtitles','title','teacherName','subject','subCodes'));
  
@@ -117,7 +120,7 @@ class StudentController extends Controller
         $stuWork->subject = $subject;        
         $stuWork->title = $title;
         $userName = Auth::user()->name;
-        $fileUrl = 'https://upto12th.s3.ap-south-1.amazonaws.com/' . $class . '/' . $subject . '/' . $title . '/' . $userName . '/' . $request->file->getClientOriginalName();
+        $fileUrl = 'https://brefnew-dev-storage-1xk3pgbkrilzi.s3.amazonaws.com/' . $class . '/' . $subject . '/' . $title . '/' . $userName . '/' . $request->file->getClientOriginalName();
         $stuWork->fileUrl = $fileUrl;
         $stuWork->fileSize = $request->file('file')->getSize();
                  $stuWork->save();
@@ -128,7 +131,7 @@ class StudentController extends Controller
         Storage::disk('s3')->put($imageName, file_get_contents($file));
         Storage::disk('s3')->setVisibility($imageName, 'public');
   
-        request()->user()->notify(new emailNotification($class,$subject,$title));
+       // request()->user()->notify(new emailNotification($class,$subject,$title));
 
         return redirect('student/homework/'.$id)->with('status','File uploaded successfully');
     }
@@ -159,6 +162,29 @@ public function deleteStuUploadFile($id,$topicId){
         return view('student.liveClass', compact('subCodes'));
     }
 
+    public function liveAttendence($id){
+      $subCodes  = subCode::all()->where('class',Auth::user()->grade);
+      $rows =  DB::select('SELECT * FROM sub_codes WHERE id = ?' , [$id]);    
+      foreach($rows as $row){
+        $link = $row->link_url;
+        $class = $row->class;
+        $subject = $row->subject;
+      }
+
+      $liveClassAttendence = new liveClassAttendence;
+      $liveClassAttendence->type = 'STUDENT';
+      $liveClassAttendence->name = Auth::user()->name;
+      $liveClassAttendence->email = Auth::user()->email;
+      $liveClassAttendence->class =$class;
+      $liveClassAttendence->subject = $subject;
+
+          $liveClassAttendence->save();
+      
+
+      return redirect($link);
+ 
+    }
+
 
     public function notificationClasswork($id,$notificationId){
         $user = Auth::user();
@@ -177,4 +203,13 @@ public function deleteStuUploadFile($id,$topicId){
         }
         return redirect('/student/exams/upcomingExams');
     }    
+
+    public function results(){
+      $results  = studentExams::all()->where('email',Auth::user()->email)->sortByDesc('created_at');
+      $toppers =    studentExams::all()->where('class',Auth::user()->grade)->sortByDesc('marksObtain');
+      $exams = Exam::all();
+      return view('student.results', compact('results','toppers','exams'));
+  }
+
+
 }

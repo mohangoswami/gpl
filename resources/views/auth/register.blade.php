@@ -103,12 +103,14 @@
                                         </div><!--end form-group-->  
                                             <div class="col-md-6">
                                                 <label class="mb-3">Select Class</label>
+                                               @isset($grades)
                                                 <select id="grade" name="grade" class="select2 form-control mb-3 custom-select" style="width: 100%; height:36px;">
                                                     <option>Select Class</option>
                                                     @foreach($grades as $class)   
                                                     <option value="{{$class}}">{{$class}}</option>
                                                    @endforeach
                                                 </select>
+                                                @endisset
                                             </div><!-- end col -->    
                                         
                                         <div class="form-group mb-0 row">

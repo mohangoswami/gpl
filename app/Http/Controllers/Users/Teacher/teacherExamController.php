@@ -15,10 +15,16 @@ use DB;
 use Illuminate\Support\Facades\Storage;
 use App\Notifications\emailNotification;
 use App\User;
+use App\Admin;
 
 
 class teacherExamController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:teacher');
+    }
+
     public function createExam(){
         $subCodes[] =  Auth::guard('teacher')->user()->class_code0;
         $subCodes[] =  Auth::guard('teacher')->user()->class_code1;
@@ -152,7 +158,7 @@ class teacherExamController extends Controller
                 $exam->discription = $data['discription'];
                 $exam->subject = $subject;
                 $exam->class = $class;
-                $exam->fileUrl = 'https://upto12th.s3.ap-south-1.amazonaws.com/' . $class . '/' . $subject . '/' . 'exams' . '/' . $data['title'] . '/' . $request->file->getClientOriginalName();
+                $exam->fileUrl = 'https://brefnew-dev-storage-1xk3pgbkrilzi.s3.amazonaws.com/' . $class . '/' . $subject . '/' . 'exams' . '/' . $data['title'] . '/' . $request->file->getClientOriginalName();
                 $exam->fileSize = $request->file('file')->getSize();
                 $exam->startExam = $startExam;
                 $exam->endExam = $endExam;
@@ -176,7 +182,10 @@ class teacherExamController extends Controller
                    User::all()->where('grade',$class)->each(function (User $user) use ($workType,$examId,$class,$subject,$title,$type){
                        $user->notify(new emailNotification($workType,$examId,$class,$subject,$title,$type));
                    });
-
+                   Admin::all()->each(function (Admin $user) use ($workType,$examId,$class,$subject,$title,$type){
+                    $admin->notify(new emailNotification($workType,$examId,$class,$subject,$title,$type));
+                });
+                 
 				return redirect('teacher/createExam')->with('status','Insert successfully');
 			}
 			catch(Exception $e){
@@ -218,7 +227,7 @@ class teacherExamController extends Controller
                 $exam->discription = $data['imgDiscription'];
                 $exam->subject = $subject;
                 $exam->class = $class;
-                $exam->fileUrl = 'https://upto12th.s3.ap-south-1.amazonaws.com/' . $class . '/' . $subject . '/' . 'exams' . '/' . $data['imgTitle'] . '/' . $request->file->getClientOriginalName();
+                $exam->fileUrl = 'https://brefnew-dev-storage-1xk3pgbkrilzi.s3.amazonaws.com/' . $class . '/' . $subject . '/' . 'exams' . '/' . $data['imgTitle'] . '/' . $request->file->getClientOriginalName();
                 $exam->fileSize = $request->file('file')->getSize();
                 $exam->startExam = $startExam;
                 $exam->endExam = $endExam;
@@ -238,11 +247,15 @@ class teacherExamController extends Controller
                 $examId = $exam->id;
                 $type = "IMG";
                 $workType = "Exam";
+                
                 //   User::where('email','bali4u2001@gmail.com') -> first()->notify(new emailNotification);
                    User::all()->where('grade',$class)->each(function (User $user) use ($workType,$examId,$class,$subject,$title,$type){
                        $user->notify(new emailNotification($workType,$examId,$class,$subject,$title,$type));
                    });
-                   
+                   Admin::all()->each(function (Admin $user) use ($workType,$examId,$class,$subject,$title,$type){
+                    $admin->notify(new emailNotification($workType,$examId,$class,$subject,$title,$type));
+                });
+                         
 				return redirect('teacher/createExam')->with('status','Insert successfully');
 			}
 			catch(Exception $e){
@@ -284,7 +297,7 @@ class teacherExamController extends Controller
                 $exam->discription = $data['docDiscription'];
                 $exam->subject = $subject;
                 $exam->class = $class;
-                $exam->fileUrl = 'https://upto12th.s3.ap-south-1.amazonaws.com/' . $class . '/' . $subject . '/' . 'exams' . '/' . $data['docTitle'] . '/' . $request->file->getClientOriginalName();
+                $exam->fileUrl = 'https://brefnew-dev-storage-1xk3pgbkrilzi.s3.amazonaws.com/' . $class . '/' . $subject . '/' . 'exams' . '/' . $data['docTitle'] . '/' . $request->file->getClientOriginalName();
                 $exam->fileSize = $request->file('file')->getSize();
                 $exam->startExam = $startExam;
                 $exam->endExam = $endExam;
@@ -307,7 +320,10 @@ class teacherExamController extends Controller
                    User::all()->where('grade',$class)->each(function (User $user) use ($workType,$examId,$class,$subject,$title,$type){
                        $user->notify(new emailNotification($workType,$examId,$class,$subject,$title,$type));
                    });
-                   
+                   Admin::all()->each(function (Admin $user) use ($workType,$examId,$class,$subject,$title,$type){
+                    $admin->notify(new emailNotification($workType,$examId,$class,$subject,$title,$type));
+                });
+                    
                 return redirect('teacher/createExam')->with('status','Insert successfully');
 			}
 			catch(Exception $e){
@@ -367,7 +383,10 @@ class teacherExamController extends Controller
                    User::all()->where('grade',$class)->each(function (User $user) use ($workType,$examId,$class,$subject,$title,$type){
                        $user->notify(new emailNotification($workType,$examId,$class,$subject,$title,$type));
                    });
-                   
+                   Admin::all()->each(function (Admin $admin) use ($workType,$examId,$class,$subject,$title,$type){
+                    $admin->notify(new emailNotification($workType,$examId,$class,$subject,$title,$type));
+                });
+                     
                 return redirect('teacher/createExam')->with('status','Insert successfully');
 			}
 			catch(Exception $e){
